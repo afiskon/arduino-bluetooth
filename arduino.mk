@@ -225,7 +225,11 @@ readpreferencesparam = $(shell sed -ne "s/$(1)=\(.*\)/\1/p" $(PREFERENCESFILE))
 SKETCHBOOKDIR := $(call readpreferencesparam,sketchbook.path)
 endif
 
-# invalid board?
+ifeq "$(BOARD)" "nano" # afiskon: dirty hack
+BOARD_BUILD_MCU := 'atmega328p'
+BOARD_UPLOAD_SPEED := 57600
+endif
+
 ifeq "$(BOARD_BUILD_MCU)" ""
 ifneq "$(MAKECMDGOALS)" "boards"
 ifneq "$(MAKECMDGOALS)" "clean"
